@@ -1,0 +1,105 @@
+{% extends 'finance/homebase.html' %}
+{% load static %}
+
+{% block home_body_block %}
+
+<div>
+    {% if messages %}
+        {% include 'finance/commonpopup.html' %}
+    {% endif %}
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 mt-4">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3 class="cardheader">Bank Detail</h3>
+                </div>
+                <div class="card-body ">
+                    <form method="POST" class="form" id="idform" >
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Name<span>*</span></label>
+                            <input type="text" class="form-control" name="name" id="idName" value="{{updatedetail.name}}" >
+                            <small id="errorName"></small>
+                        </div> <br>
+
+                        <div class="form-group">
+                            <label>Bank Name<span>*</span></label>
+                            <input type="text" class="form-control" name="bankName" id="idBankName" value="{{updatedetail.bankName}}" >
+                            <small id="errorBankName"></small>
+                        </div> <br>
+
+                        <div class="form-group">
+                            <label>IFSC code<span>*</span></label>
+                            <input type="text" class="form-control" name="ifscCode" id="idifscCode" value="{{updatedetail.ifscCode}}" >
+                            <small id="errorifscCode"></small>
+                        </div> <br>
+
+                        <div class="form-group">
+                            <label>Account Number<span>*</span></label>
+                            <input type="number" class="form-control" name="accountNumber" id="idaccountNumber" value="{{updatedetail.accountNumber}}" >
+                            <small id="erroraccountNumber"></small>
+                        </div> <br>
+
+                        <div class="form-group">
+                            <label>Branch<span>*</span></label>
+                            <input type="text" class="form-control" name="branch" id="idBranch" value="{{updatedetail.branch}}" >
+                            <small id="errorbranch"></small>
+                        </div> <br>
+
+
+                        <div class="d-grid gap-2 col-4 mx-auto">
+                            <button type="submit" id="submitval" onclick="validate()" class="btn  btn-outline-primary ">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-------Table List-->
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="col-lg-7 mt-3">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="d-flex float-end">
+                        <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <table class="table table-hover fw-bold border border-bottom-0 text-dark">
+                <th>Name</th>
+                <th>Bank Name</th>
+                <th>IFSC</th>
+                <th>ACCount Number</th>
+                <th>Branch</th>
+                <th>Update</th>
+                <th>Delete</th>
+
+                {% for bankdata in bankdetaildata%}
+                <tr class="">
+                    <td>{{bankdata.name}}</td>
+                    <td>{{bankdata.bankName}}</td>
+                    <td>{{bankdata.ifscCode}}</td>
+                    <td>{{bankdata.accountNumber}}</td>
+                    <td>{{bankdata.branch}}</td>
+                    <td><a href="/bankdetailupdate/{{bankdata.id}}" class="btn btn-success">Update</a> </td>
+                    <td><a href="/deletedetail/{{bankdata.id}}" class="btn btn-danger">Delete</a> </td>
+                </tr>
+                {% endfor %}
+              </table>
+            {%include 'finance/paginator.html' with page=bankdetaildata %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript_block %}
+    <script src="{% static 'js/myjs/bankdetail.js' %}"> </script>
+{% endblock%}
+

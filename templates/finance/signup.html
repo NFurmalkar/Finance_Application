@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+{% extends 'finance/base.html' %}
+{% load static %}
+
+{% block cssBlock %}
+
+<link rel="stylesheet" href="{% static 'css/mycss/login.css' %}">
+{% endblock%}
+
+{% block body_block%}
+
+{% if messages %}
+    {% include 'finance/commonpopup.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row justify-content-center">
+       
+        <div class="col-lg-5 text-center">    
+            <h1 class='text-white'>Finance</h1>
+              <div class="form-login"></br>
+                <h4>Register</h4>
+                </br>
+                <div style="margin-top: -12px;">
+                    {% if error_msg %}
+                    <b style="color: red;">{{error_msg}}</b>
+                    {% endif %}
+                </div>
+                <br>
+                <form method="POST" id="myForm">
+                    
+                  {% csrf_token %}
+                  <input type="text" id="InputfirstName"  name="firstName" class="form-control input-sm chat-input" value="{{values.ufname}}" placeholder="First Name"/>
+                  <small id="errorfirstName"> </small>
+                  </br>
+                  <input type="text" id="InputlastName" name="lastName" class="form-control input-sm chat-input" value="{{values.ulname}}" placeholder="Last Name"/>
+                  <small id="errorlastName"> </small>
+                  </br>
+                  <input type="email" id="Inputemail"  name="email" class="form-control input-sm chat-input" value="{{values.uemail}}" placeholder="Email"/>
+                  <small id="erroremail"> </small>
+                </br>
+                <input type="number" id="InputInitialCapital"  name="initialCapital" class="form-control input-sm chat-input" value="" min="0" placeholder="Initial Capital"/>
+                <small id="errorinitialCapital"> </small>
+                  <!-- <br>
+                  <input type="date" id="Inputdob" name="dob" class="form-control input-sm chat-input" value="{{values.udob}}" placeholder=""/>
+                  <small id="errordob"> </small> -->
+                  <br>
+                  <!-- <input type="hidden" id="Inputgender" type="radio" name="gender" value="default" checked>
+                  <input class="form-check-input" type="radio" id="Inputgender"  name="gender" value="male">
+                  <label class="form-check-label">Male</label> 
+                  &nbsp;
+                  <input class="form-check-input" type="radio" id="Inputgender" name="gender" value="female">
+                  <label class="form-check-label">Female</label> -->
+                  <select class="form-control" id="Inputgender" name="gender" value="{{values.ugender}}">
+                      <option value="male" style="color: black;">Male</option>
+                      <option value="female" style="color: black;">Female</option>
+                  </select>
+                  <small id="errorgender"> </small>
+                  <br>
+                  <input type="password" id="Inputpassword" name="password" class="form-control input-sm chat-input" placeholder="Password"/>
+                  <small id="errorpassword"> </small>
+                  <br>
+                  <div class="wrapper">
+                          <span class="group-btn">
+                              <button type="submit" class="btn btn-danger btn-md">login <i class="fa fa-sign-in"></i></button>
+                          </span>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </br></br>
+    <!--footer-->
+    <div class="footer text-white text-center">
+        <p>Dont have an account?  <a href="/" >Login Now!</a> </p>
+    </div>
+    <!--//footer-->
+  </div>
+
+
+
+<!-- <div class="row">
+    <div class="col-lg-4 mx-auto mt-5">
+        <div class="card">
+            <div class="card-header text-center">
+              <h3 class="cardheader">SignUp</h3>
+            </div>
+            {% if error_msg %}
+            <div>
+                <p class="alert alert-danger" role="alert">{{error_msg}}</p>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" name="firstName" class="form-control" value="{{values.ufname}}" required>
+                </div> <br>
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" name="lastName" class="form-control" value="{{values.ulname}}" required>
+                </div><br>
+                <div class="form-group">
+                    <label>Email </label>
+                    <input type="email" name="email" class="form-control" value="{{values.uemail}}" required>
+                </div><br>
+                <div class="form-group">
+                    <label>DOB</label>
+                    <input type="date" name="dob" class="form-control" value="{{values.udob}}" required>
+                </div><br>
+
+                <div class="form-group">
+                    <label>Gender</label> &nbsp;
+                    <input type="hidden" type="radio" name="gender" value="default" checked>
+                    <input class="form-check-input" type="radio" name="gender" value="male">
+                    <label class="form-check-label">Male</label> 
+                    &nbsp;
+                    <input class="form-check-input" type="radio" name="gender" value="female">
+                    <label class="form-check-label">Female</label>
+                </div>
+               
+
+                <div class="form-group">
+                    <label>password</label>
+                    <input type="password" name="password" id="pwd1" class="form-control" required>
+                </div><br>
+                <button type="submit" class="btn btn-primary move">Submit</button> 
+                </form>
+            </div>
+          </div>
+    </div>
+</div>
+<br><br><br> -->
+
+ <!--<div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" value="male">
+                    <label class="form-check-label">Male</label> 
+                    <br>
+                    <input class="form-check-input" type="radio" name="gender" value="female">
+                    <label class="form-check-label">Female</label>
+                </div><br>-->
+
+{% endblock %}
+    
+{% block jsBlock %}
+  <script src="{% static 'js/myjs/register.js'%}"> </script>
+{% endblock %}

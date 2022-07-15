@@ -1,0 +1,35 @@
+/*.rows {
+    margin-left: 35%;
+    margin-top: 60px;
+}*/
+body{
+    background-color: #8f3872;
+
+}
+.move {
+    margin-left: 35%;
+}
+.cardheader {
+    color: #903769;
+}
+.form-control {
+    border-radius: 15px;
+}
+
+
+
+.form-control.errors {
+    border-color: #dc3545;
+}
+.form-control.success {
+    border-color: #47b475;
+}
+
+
+.invalid {
+     color: #212529;
+     background-color: #fff;
+     border-color: #dc3545;
+     outline: 0;
+     box-shadow: 0 0 0 0.25rem #e8babe;
+}

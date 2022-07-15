@@ -1,0 +1,135 @@
+{% extends 'finance/homebase.html' %}
+{% load static %}
+
+{% load getName %}
+
+
+{% block home_body_block %}
+<div>
+{% if messages %}
+    {% include 'finance/commonpopup.html' %}
+{% endif %}
+</div>
+<div class="row">
+    <div class="col-lg-3 mt-4">
+        <div class="card">
+            <div class="card-header text-center">
+              <h3 class="cardheader">Transaction</h3>
+            </div>
+            {% if error_msg %}
+            <div>
+                <p class="alert alert-danger" role="alert">{{error_msg}}</p>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <form method="POST" id="form">
+                    {% csrf_token %}
+
+                {% if getCustId.customerName %}   
+                <div class="form-group">
+                    <label class="form-label">Customer Name<span>*</span></label> 
+                      <select id="inputCustomerName" class="form-select" name="customerName" value="" onchange="location = this.value;">
+                            <option value="{{getCustId.id}}"> {{getCustId.customerName|getLoantName}} </option> <!---loanDetails-->
+                            <optgroup class="dropdown-divider" label="------------">
+                                {% for loanDetails in loanDetails%}
+                                <option value="{{loanDetails.id}}"> {{loanDetails.customerName|getLoantName}} </option> 
+                                {% endfor %}
+                            </optgroup>
+                      </select>
+                      <small id="errorSelectName"> </small>
+                </div> <br>
+
+                {% else %}
+                <div class="form-group">
+                    <label class="form-label">Customer Name<span>*</span></label> 
+                      <select id="inputCustomerName" class="form-select" name="customerName" value="" onchange="location = this.value;">
+                        <option value="selectName" selected>Select Name</option>
+                          {% for loanDetails in loanDetails%}
+                            <option value="{{loanDetails.id}}"> {{loanDetails.customerName|getLoantName}} </option> 
+                        {% endfor %}
+                      </select>
+                      <small id="errorSelectName"> </small>
+                </div> <br>
+                {% endif %}
+        
+                <div class="form-group">
+                    <label>Transaction Number</label>
+                    <input type="number" name="transactionNo" id="inputTransactionId" class="form-control" value="{{transicationId}}" readonly>
+                    <small id="errorInitialAmount"></small>
+                </div><br>
+                <div class="form-group">
+                    <label>Daily Amount</label>
+                    <input type="number" name="dailyAmount" id="inputDailyAmount" class="form-control" value="{{dailyAmount}}" min="1" readonly>
+                    <small id="errorDailyAmount"></small>
+                </div><br>
+                <div class="form-group">
+                    <label>Remaining Amount</label>
+                    <input type="number" name="remainingAmount" id="inputRemaining Amount" class="form-control" value="{{remainingAmount}}" readonly>
+                    <small id="errorInitialAmount"></small>
+                </div><br>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" name="dateValue" id="inputDateTime" class="form-control" value="" autocomplete="off">
+                    <small id="errorDateTime"></small>
+                </div><br>
+
+                <div class="form-group">
+                    <label>Paid Amount</label>
+                    <input type="number" name="paidAmount" id="inputPaidAmount" class="form-control" value="" autocomplete="off">
+                    <small id="errorPaidAmount"></small>
+                </div><br>
+
+                <button type="submit" class="btn btn-primary move">Submit</button>
+                </form>
+            </div>
+          </div>
+    </div>
+        
+{% if TransicationData %}    
+        <!-------Table List-->
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-lg-7  mt-4" style="margin-left: 14%;">
+        <!-- <div class="row">
+            <div class="col-lg-12">
+                <form class="d-flex float-end">
+                    <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <hr> -->
+            <table class="table table-hover fw-bold border border-bottom-0 text-dark" >
+                    <th>customerId</th>
+                    <th>transactionNo</th>
+                    <th>dailyAmount</th>
+                    <th>paidAmount</th>
+                    <th>Date</th>
+                    
+                    {% for TransicationData in TransicationData%}
+                    <tr class="">
+                        <td>{{TransicationData.customerId|getCustName}}</td> 
+                        <td>{{TransicationData.transactionNo}}</td>
+                        <td>{{TransicationData.dailyAmount}}</td>
+                        <td>{{TransicationData.paidAmount}}</td>
+                        <td>{{TransicationData.paidDate|date:'d/n/Y'}}</td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                {%include 'finance/paginator.html' with page=TransicationData %}
+    </div>
+   
+{% endif %}   
+</div>
+
+{% endblock %}
+
+
+{% block javascript_block %}
+    <script src="{% static 'js/myjs/transaction.js' %}"> </script>
+{% endblock %}
+
+
+
+
+

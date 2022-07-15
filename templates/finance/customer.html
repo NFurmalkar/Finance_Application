@@ -1,0 +1,102 @@
+{% extends 'finance/homebase.html' %}
+{% load static%}
+
+{% block home_body_block %}
+
+<div>
+    {% if messages %}
+        {% include 'finance/commonpopup.html' %}
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-lg-4 mt-4">
+        <div class="card">
+            <div class="card-header text-center">
+              <h3 class="cardheader">Customer</h3>
+            </div>
+            {% if error_msg %}
+            <div>
+                <p class="alert alert-danger" role="alert">{{error_msg}}</p>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <form method="POST" id="idForm">
+                    {% csrf_token %}
+                <div class="form-group">
+                    <label>Name<span>*</span></label>
+                    <input type="text" name="name" id="idName" class="form-control" value="{{customerDetails.name}}" >
+                    <small id="errorName"></small>
+                </div> <br>
+                <div class="form-group">
+                    <label>AadharNo<span>*</span></label>
+                    <input type="number" name="aadharNo" id="idAadharNo" class="form-control" value="{{customerDetails.aadharNo}}"  maxlength="12" >
+                    <small id="erroraadharNo"></small>
+                </div><br>
+                <div class="form-group">
+                    <label>Address<span>*</span> </label>
+                    <input type="text" name="address" id="idAddress" class="form-control" value="{{customerDetails.address}}" >
+                    <small id="errorAddress"></small>
+                </div><br>
+                <div class="form-group">
+                    <label>Business<span>*</span></label>
+                    <input type="text" name="business" id="idBusiness" class="form-control" value="{{customerDetails.business}}" >
+                    <small id="errorBusiness"></small>
+                </div><br>
+                <div class="form-group">
+                    <label>Mobile No<span>*</span></label>
+                    <input type="number" name="mobile" id="idMobile" class="form-control" value="{{customerDetails.mobile}}"  >
+                    <small id="errorMobile"></small>
+                </div><br>
+                <div class="d-grid gap-2 col-4 mx-auto">
+                    <button type="submit" class="btn  btn-outline-primary ">Submit</button>
+                </div>
+                
+                </form>
+            </div>
+          </div>
+    </div>
+
+    <!-------Table List-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-lg-7 mt-2">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="d-flex float-end">
+                    <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <hr>
+            <table class="table table-hover fw-bold border border-bottom-0 text-dark">
+                <th>Name</th>
+                <th>AadharNo</th>
+                <th>Address</th>
+                <th>Business</th>
+                <th>Mobile No.</th>
+                <th>Update</th>
+                <th>Delete</th>
+                {% for customerinfo in customerinfo%}
+                <tr class="">
+                    <td>{{customerinfo.name}}</td>
+                    <td>{{customerinfo.aadharNo}}</td>
+                    <td>{{customerinfo.address}}</td>
+                    <td>{{customerinfo.business}}</td>
+                    <td>{{customerinfo.mobile}}</td>
+                    <td><a href="/customerupdate/{{customerinfo.id}}" class="btn btn-success">Update</a> </td>
+                    <td><a href="/customerdelete/{{customerinfo.id}}" class="btn btn-danger">Delete</a> </td>
+                </tr>
+                {% endfor %}
+              </table>
+              {%include 'finance/paginator.html' with page=customerinfo %}
+    </div>    
+
+</div>
+<br><br><br>
+
+{% endblock %}
+
+{% block javascript_block %}
+    <script src="{% static 'js/myjs/customer.js' %}"> </script>
+{% endblock %}

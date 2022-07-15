@@ -1,0 +1,196 @@
+{% extends 'finance/homebase.html' %}
+{% load static %}
+
+{% load getName %}
+
+
+{% block home_body_block %}
+
+<div>
+  {% if messages %}
+      {% include 'finance/commonpopup.html' %}
+  {% endif %}
+</div>
+
+    <div class="row justify-content-lg-end">
+        <div class="col-lg-8 mt-2">
+          <div class="card">
+            <div class="card-header text-center">
+              <h3 class="cardheader">Loan</h3>
+            </div>
+            <div class="card-body">
+              <form method="POST" class="row g-2" id="form">
+                  {% csrf_token %}
+                  {% if error_msg%}
+                  <div>
+                    <p id="error_msg">{{error_msg}}</p>
+                  </div>
+                  {% endif %}
+                  <div class="col-md-6">
+                      <label class="form-label">Select Name<span>*</span></label> 
+                      <select id="inputCustomerName" class="form-select" name="customerName" value="{{loandetail.customerName}}" required>
+                        {% if loandetail.customerName%}
+                          <option value="{{loandetail.id}}">{{loandetail.customerName|custName}}</option>
+                        {% endif %}
+                        <option value="selectCustomer">---Select Name---</option>
+                        {% for customerList in customerList%}
+                        <option value="{{customerList.id}}" >{{customerList.name}}</option>
+                        {% endfor %}
+                      </select>
+                      <small id="reqName"> </small>
+                    </div>
+
+              <!--------------if else for transaction number----------->
+                    {% if loandetail.transactionNo %}
+                      <div class="col-md-6">
+                        <label class="form-label">Transaction No<span>*</span></label>
+                        <input type="number" class="form-control" id="inputEmail4" name="transactionNo" value="{{loandetail.transactionNo}}" readonly>
+                      </div>
+                    {% else %}
+                      <div class="col-md-6">
+                        <label class="form-label">Transaction No<span>*</span></label>
+                        <input type="number" class="form-control" id="inputEmail4" name="transactionNo" value="{{tran}}" value="{{loandetail.transactionNo}}" readonly>
+                      </div>  
+                    {% endif %}
+              <!---------------------end if else-------------------------->    
+                  <div class="col-md-4">
+                    <label class="form-label">Amount<span>*</span></label> 
+                    <input type="text" class="form-control" id="inputAmount" name="amount" value="{{loandetail.amount}}" onkeyup="calculateAmount('{{totalCapital}}')" min="1" required >
+                    <small id="reqAmount"> </small>
+                  </div>
+                  <div class="col-md-4">
+                      <label class="form-label">Interest<span>*</span></label> 
+                      <input type="text" class="form-control" id="inputInterest" name="interest" value="{{loandetail.interest}}" maxlength="2" onkeyup="calculateInterest()" required>
+                      <small id="reqInterest"> </small>
+                    </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Interest Amount</label>
+                    <input type="text" class="form-control" id="inputInterestAmount" name="interestAmount" value="{{loandetail.interestAmount}}" required readonly>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">Final Amount</label>
+                    <input type="text" class="form-control" id="inputFinalAmount" name="Amountfinal" value="{{loandetail.Amountfinal}}" readonly>
+                    <small id="reqFinalAmount"> </small>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Paid Amount</label>
+                    <input type="text" class="form-control" id="inputPaidAmount" name="paidAmount" value="{{loandetail.paidAmount}}" readonly>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">Cheque No</label>
+                    <input type="number" class="form-control" id="inputchequeNo" name="chequeNumber" value="{{loandetail.chequeNumber}}" onkeyup="calculatecheque()" maxlength="12" >
+                  <small id="reqChequeNo"> </small>
+                  </div>
+
+                  <div class="col-md-4">
+                      <label class="form-label">Days<span>*</span></label> 
+                      <input type="number" class="form-control" id="inputDays" name="Udays" value="{{loandetail.Udays}}" onkeyup="calculateDays()" required>
+                      <small id="reqDays"> </small>
+                    </div>
+                  
+                  <div class="col-md-4">
+                    <label class="form-label">Today Date</label>
+                    <input type="text" class="form-control" id="inputTodayDate" name="todayDate" value="{{loandetail.todayDate}}" readonly>
+                  </div>
+
+          <!--------------if else for expectedDay ----------->
+                  {% if loandetail.expectedDay %}
+                  <div class="col-md-4">
+                    <label  class="form-label">Expected Day</label>
+                    <input type="text" class="form-control" id="inputExpectedDay" name="expectedDay" value="{{loandetail.expectedDay|date:'d/n/Y'}}" readonly required>
+                    <span></span>
+                  </div>
+                  {% else %}
+                  <div class="col-md-4">
+                    <label  class="form-label">Expected Day</label>
+                    <input type="text" class="form-control" id="inputExpectedDay" name="expectedDay" value="{{loandetail.expectedDay}}" readonly required>
+                    <span></span>
+                  </div>
+                  {% endif %}
+
+                  <div class="col-md-6">
+                    <label class="form-label">Mortgage</label> 
+                    <input type="text" class="form-control" id="inputmorgage" name="morgage" value="{{loandetail.morgage}}" onkeyup="validatestring()" onkeyup="validatestring()">
+                  <small id="reqMortgage"> </small>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Guarantee person</label> 
+                    <input type="text" class="form-control" id="inputGuaranteePerson" name="guaranteePerson" value="{{loandetail.guaranteePerson}}" onkeyup="validatestring()">
+                    <small id="reqGuaranteeperson"> </small>
+                  </div>
+                
+                  <div class="d-grid gap-2 col-4 mx-auto">
+                      <button class="btn  btn-outline-primary mb-2 mt-2"  type="submit" onclick="saveform()">Save</button>
+                  </div>
+                  <!------------onmousemove="calculateDays()"-->
+                </form>
+            </div>  
+          </div>    
+        </div>
+    </div>
+    <br>
+
+    <hr> <hr>
+    <div class="row justify-content-lg-end">
+          <!-------Table List-->
+    &nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="col-lg-12 mt-3">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="d-flex float-end">
+                        <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+                <table class="table table-hover fw-bold border border-bottom-0 text-dark">
+                    <th>customer Name</th>
+                    <th>Transaction No</th>
+                    <th>Amount</th>
+                    <th>Interest</th>
+                    <th>Amount Final</th>
+                    <th>paidAmount</th>
+                    <th>User Udays</th>
+                    <th>Approve</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                    
+                    {% for loanData in loanData%}
+                    <tr>
+                        <td>{{loanData.customerName|custName}}</td>
+                        <td>{{loanData.transactionNo}}</td>
+                        <td>{{loanData.amount}}</td>
+                        <td>{{loanData.interest}}</td>
+                        <td>{{loanData.Amountfinal}}</td>
+                        <td>{{loanData.paidAmount}}</td>
+                        <td>{{loanData.Udays}}</td>
+                        <td><a href="/loanApprove/{{loanData.id}}" class="btn btn-info">Approve</a> </td>
+                        <td><a href="/loanUpdate/{{loanData.id}}" class="btn btn-success">Update</a> </td>
+                        <td><a href="/loanDelete/{{loanData.id}}" class="btn btn-danger">Delete</a> </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+
+                 <div class="float-end mb-4">
+                  {%include 'finance/paginator.html' with page=loanData %}
+                 </div> 
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascript_block %}
+<script src="{% static 'js/myjs/loanJs.js' %}"> </script>
+{% endblock%}
+
+
+
+
+
+

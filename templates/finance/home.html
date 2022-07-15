@@ -1,0 +1,103 @@
+{% extends 'finance/homebase.html' %}
+
+{% block home_body_block %}
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:#254291" >
+            <div class="card-body">
+              <h5 class="card-title text-center">Capital</h5>
+              <hr>
+              <div class=" text-center mt-5">
+                <p class="card-text"><h2>&#8377; {{sumOfTotalCapital}}</h2></p>
+              </div>
+            </div>
+        </div>
+        
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:#431a53" style="width: 18rem;">
+          
+            <div class="card-body">
+              <h5 class="card-title text-center">Customers</h5>
+              <hr>
+              <div class=" text-center mt-5">
+                <p class="card-text"><h2>{{customerinfo.id__count}}</h2></p>
+              </div>
+            </div>
+        </div>
+        
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:#a82626" style="width: 18rem;" >
+            <div class="card-body">
+              <h5 class="card-title text-center">Bank Detail </h5>
+              <hr>
+              <div class=" text-center mt-5">
+                <p class="card-text"><h2>{{bankdetaildata.id__count}}</h2></p>
+              </div>
+            </div>
+        </div>
+        
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:#0e7e66" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title text-center">Partner</h5>
+              <hr>
+              <div class=" text-center mt-5">
+                <p class="card-text"><h2>{{partnerinfo.id__count}}</h2></p>
+              </div>
+            </div>
+        </div>
+
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:#5b7c0ce1" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title text-center">Pending Loan</h5>
+              <hr>
+              <div class=" text-center mt-5">
+                <p class="card-text"><h2>{{pendingLoan.id__count}}</h2></p>
+              </div>
+            </div>
+        </div>
+
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:#6523bb" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title text-center">Approve Loan</h5>
+              <hr>
+              <div class=" text-center mt-5">
+                <p class="card-text"><h2>{{totalApprovedLoan.id__count}}</h2></p>
+              </div>
+            </div>
+        </div>
+
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:midnightblue" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title text-center">Completed Loan</h5>
+              <hr>
+              <div class=" text-center mt-5">
+                <p class="card-text"><h2>{{completedLoan.id__count}}</h2></p>
+              </div>
+            </div>
+        </div>
+
+        <div class="card text-white mt-4 mx-3" style="height: 240px; width: 240px; background-color:#8f3308" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title text-center">Today Collection</h5>
+              <div class=" text-center mt-5">
+                <p class="card-text">
+                  
+                    {% if todayCollection.paidAmount__sum is None %}
+                    <h2> 00 </h2>
+                    {% else %}
+                    <h2> {{todayCollection.paidAmount__sum}}  </h2>
+                    {% endif %}
+                
+              </p> 
+              </div>
+            </div>
+        </div>
+    
+    </div>
+    
+
+
+    
+</div>
+
+
+{% endblock %}

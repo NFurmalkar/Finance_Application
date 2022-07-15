@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/bcss/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mycss/test.css' %}">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8f8f8; ">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Finance</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                  </li>
+                  
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Master
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="/customer">Customer</a></li>
+                      <li><a class="dropdown-item" href="/partner">Partner Info.</a></li>
+                      <li><a class="dropdown-item" href="/bankdetail">Bank Detail</a></li>
+                      <li><a class="dropdown-item" href="/"> </a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/loan">Loan</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/transication" tabindex="-1" aria-disabled="true">Transication</a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Report
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="/approveLoan">approved Loan</a></li>
+                      <li><a class="dropdown-item" href="/completedLoan">Completed Loan</a></li>
+                    </ul>
+                  </li>
+
+                </ul>
+
+                <form class="d-flex">
+                  {% csrf_token %}
+                  <input class="form-control me-2" type="text" name="searchName" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="button">Search</button>
+                </form>
+                
+                <ul class="navbar-nav me-2 ms-2">
+                  <li><a class="btn btn-block btn-danger " href="/">Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </div>
+
+
+{% block home_body_block %}
+
+{% endblock %}
+
+<script src="{% static 'js/bootstrap.min.js' %}"> </script>
+<script src="{% static 'js/popper/popper.js' %}"> </script>
+<script src="{% static 'js/jquery/jquery.js' %}"> </script>
+
+{% block javascript_block %}
+
+{% endblock%}
+
+</body>
+</html>

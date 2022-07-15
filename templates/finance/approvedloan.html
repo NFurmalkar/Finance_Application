@@ -1,0 +1,52 @@
+{% extends 'finance/homebase.html' %}
+{% load static %}
+
+{% load getName %}
+
+{% block home_body_block %}
+
+<div class="container-fluid">
+    <div class="row">
+        &nbsp;
+          <div class="col-lg-12 col-md-6 col-sm-5 mt-3">
+              <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                      <form class="d-flex float-end">
+                          <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-success" type="submit">Search</button>
+                      </form>
+                  </div>
+              </div>
+              <hr>
+                  <table class="table table-hover fw-bold border border-bottom-0 text-dark">
+                      <th>customer Name</th>
+                      <th>Transaction No</th>
+                      <th>Amount</th>
+                      <th>Interest</th>
+                      <th>Amount Final</th>
+                      <th>paidAmount</th>
+                      <th>User Udays</th>
+                      
+                      {% for loanData in approvedLoanData%}
+                      <tr>
+                        <td>{{loanData.customerName|custName}}</td>
+                        <td>{{loanData.transactionNo}}</td>
+                        <td>{{loanData.amount}}</td>
+                        <td>{{loanData.interest}}</td>
+                        <td>{{loanData.Amountfinal}}</td>
+                        <td>{{loanData.paidAmount}}</td>
+                        <td>{{loanData.Udays}}</td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+        
+                   <div class="float-end mb-4">
+                    {%include 'finance/paginator.html' with page=approvedLoanData %}
+                   </div> 
+        
+          </div>
+        </div>  
+        
+
+</div>
+{% endblock %}
